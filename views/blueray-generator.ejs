@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlueRay-Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-800 min-h-screen flex items-center justify-center px-4 py-10">
+
+  <!-- Main container -->
+  <div class="flex flex-col items-center space-y-6">
+
+    <!-- Capture area -->
+    <div class="relative w-full max-w-4xl font-sans" id="blueray">
+      <!-- Background Image -->
+      <img src="/images/blueray.jpg" alt="Background Image" class="w-full h-auto rounded-lg shadow-xl" />
+
+      <!-- Overlay content -->
+      <div class="absolute inset-0 flex flex-col justify-center px-6 sm:px-10 py-6 text-left">
+        <div class="space-y-6">
+          <!-- ROI -->
+          <div>
+            <p class="text-zinc-400 text-lg sm:text-xl font-semibold">ROI</p>
+            <h1 class="text-white text-3xl sm:text-4xl font-bold">+<%= pnl %>%</h1>
+          </div>
+
+          <!-- Entry Price -->
+          <div>
+            <p class="text-zinc-400 text-lg sm:text-xl font-semibold">ENTRY PRICE</p>
+            <h2 class="text-white text-2xl sm:text-3xl font-semibold"><%= entryprice %></h2>
+          </div>
+
+          <!-- Current Price -->
+          <div>
+            <p class="text-zinc-400 text-lg sm:text-xl font-semibold">CURRENT PRICE</p>
+            <h2 class="text-white text-2xl sm:text-3xl font-semibold"><%= currentPrice %></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons section below the image -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4">
+      <!-- Download Button -->
+      <button id="downloadBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+        Download Image
+      </button>
+
+      <!-- Done Link -->
+      <a href="/" class="text-white border border-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition duration-300 font-medium">
+        Done
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Download Script -->
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const capture = document.getElementById("blueray");
+      html2canvas(capture).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "blueray-snapshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

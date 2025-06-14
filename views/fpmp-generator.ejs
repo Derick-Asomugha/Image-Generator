@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FPMP-Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-800 min-h-screen flex flex-col items-center justify-center px-4 py-10 space-y-6">
+
+  <!-- Capture Container -->
+  <div class="relative w-full max-w-4xl font-sans" id="fpmp">
+    
+    <!-- Background image -->
+    <img src="/images/fpmp.jpg" alt="Background Image" class="w-full h-auto rounded-lg shadow-xl" />
+
+    <!-- Overlay content -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center px-4 py-6 text-white text-center space-y-8">
+
+      <!-- Row of two boxes (always side by side) -->
+      <div class="flex flex-row gap-6 w-full justify-center">
+        
+        <!-- Investment -->
+        <div id="1" class="w-1/2 pl-4">
+          <p class="text-sm sm:text-base mb-1">Invested</p>
+          <h2 class="text-xl sm:text-2xl font-bold text-green-400"><%= investment %></h2>
+          <p class="text-base sm:text-lg">$<%= investmentInUsd %> USD</p>
+        </div>
+
+        <!-- Current Profit -->
+        <div id="2" class="w-1/2 pr-4">
+          <p class="text-sm sm:text-base mb-1">Current Profit</p>
+          <h2 class="text-xl sm:text-2xl font-bold text-green-400"><%= currentProfit %></h2>
+          <p class="text-base sm:text-lg">$<%= currentProfitInUsd %> USD</p>
+        </div>
+
+      </div>
+
+      <!-- PNL -->
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-green-500 drop-shadow-[0_0_6px_#22c55e] outline outline-2 outline-green-700 rounded px-6 py-2 inline-block">
+        +<%= pnl %>%
+      </h1>
+
+    </div>
+  </div>
+
+  <!-- Buttons below image -->
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+    <!-- Download Button -->
+    <button id="downloadBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+      Download Image
+    </button>
+
+    <!-- Done Link -->
+    <a href="/" class="text-white border border-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition duration-300 font-medium">
+      Done
+    </a>
+
+  </div>
+
+  <!-- Download Script -->
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const capture = document.getElementById("fpmp");
+      html2canvas(capture).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "fpmp-snapshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

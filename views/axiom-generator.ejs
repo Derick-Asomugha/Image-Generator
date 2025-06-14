@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIOM-Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-800 min-h-screen flex items-center justify-center px-4 py-10">
+
+  <!-- Main container -->
+  <div class="flex flex-col items-center space-y-6">
+
+    <!-- Capture area -->
+    <div class="relative w-full max-w-3xl aspect-[700/450] font-sans" id="axiom">
+      <!-- Background image -->
+      <img src="/images/axiompro.jpg" alt="Background Image" class="w-full h-full object-cover rounded-lg shadow-xl" />
+
+      <!-- Overlay content -->
+      <div class="absolute inset-0 flex items-end sm:items-center px-6 py-10 sm:py-16">
+        <div class="space-y-5 text-white">
+
+          <!-- RFC label -->
+          <p class="text-xl sm:text-2xl font-semibold">___________</p>
+
+          <!-- pnlInSol -->
+          <h1 class="text-4xl sm:text-5xl font-semibold text-black px-6 py-2 rounded-md">
+            SOL +<%= pnlInSol %>K
+          </h1>
+
+          <!-- PNL Row -->
+          <p class="text-base sm:text-lg">
+            <span class="text-green-400 font-medium text-lg sm:text-xl">PNL</span>
+            <span class="ml-10 text-green-400 font-semibold text-xl sm:text-2xl">+<%= pnl %>%</span>
+          </p>
+
+          <!-- Bought Row -->
+          <p class="text-base sm:text-lg">
+            <span class="text-white">Bought</span>
+            <span class="ml-5 text-indigo-300 font-semibold">SOL <%= buyingPrice %>K</span>
+          </p>
+
+          <!-- Position Row -->
+          <p class="text-base sm:text-lg">
+            <span class="text-white">Position</span>
+            <span class="ml-3 text-purple-300 font-semibold">SOL <%= currentPrice %>K</span>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons section below the image -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4">
+      <!-- Download Button -->
+      <button id="downloadBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+        Download Image
+      </button>
+
+      <!-- Done Link -->
+      <a href="/" class="text-white border border-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition duration-300 font-medium">
+        Done
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Download Script -->
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const capture = document.getElementById("axiom");
+      html2canvas(capture).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "axiom-snapshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

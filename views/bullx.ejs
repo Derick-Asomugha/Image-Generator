@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BullX Image Generator</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkBg: '#23272a',       // soft dark gray background
+            inputBg: '#2c3136',      // slightly lighter dark for inputs
+            primary: '#22c55e',      // shiny bright emerald green
+            primaryHover: '#16a34a', // darker green on hover
+            labelGray: '#a0aec0',    // soft gray for labels
+            placeholderGray: '#718096' // muted gray placeholders
+          },
+          boxShadow: {
+            'input-glow': '0 0 8px rgba(34, 197, 94, 0.6)',            // subtle glowing shadow for inputs
+            'input-glow-strong': '0 0 12px 3px rgba(34, 197, 94, 0.9)', // stronger glow for focus/hover
+            'button-glow': '0 0 10px rgba(34, 197, 94, 0.7)',           // glow for button
+            'button-glow-strong': '0 0 15px 5px rgba(34, 197, 94, 1)',  // stronger glow on hover
+            'loading-glow': '0 0 8px 2px rgba(34, 197, 94, 0.8)'        // glow for loading bar fill
+          }
+        }
+      },
+      darkMode: 'class',
+    };
+  </script>
+</head>
+<body class="bg-darkBg text-white min-h-screen flex flex-col items-center justify-center px-6">
+
+  <div class="w-full max-w-md bg-inputBg p-8 rounded-2xl shadow-lg space-y-8
+              shadow-input-glow/40 hover:shadow-input-glow-strong transition-shadow duration-500">
+    <h1 class="text-5xl font-extrabold text-primary text-center tracking-wide drop-shadow-md">BullX</h1>
+
+    <!-- Loading Bar (Initially Hidden) -->
+    <div id="loadingBar" class="w-full h-2 bg-darkBg rounded-full overflow-hidden hidden mb-6 shadow-inner">
+      <div id="barFill" class="h-full bg-primary transition-all duration-150 ease-linear rounded-full
+                      shadow-loading-glow" style="width: 0%;"></div>
+    </div>
+
+    <form action="/bullx" method="post" id="bullxForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+      <div>
+        <label for="pnl" class="block mb-2 font-semibold text-labelGray uppercase tracking-wider">PNL</label>
+        <input
+          type="number"
+          name="pnl"
+          id="pnl"
+          required
+          autofocus
+          placeholder="PNL"
+          class="w-full px-4 py-3 bg-darkBg border border-primary rounded-lg text-white placeholder-placeholderGray
+                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-70
+                 shadow-input-glow transition
+                 focus:shadow-input-glow-strong"
+        />
+      </div>
+
+      <div>
+        <label for="totalinvested" class="block mb-2 font-semibold text-labelGray uppercase tracking-wider">Total Invested</label>
+        <input
+          type="number"
+          name="totalinvested"
+          id="totalinvested"
+          required
+          placeholder="Total Invested"
+          class="w-full px-4 py-3 bg-darkBg border border-primary rounded-lg text-white placeholder-placeholderGray
+                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-70
+                 shadow-input-glow transition
+                 focus:shadow-input-glow-strong"
+        />
+      </div>
+
+      <div>
+        <label for="totalsold" class="block mb-2 font-semibold text-labelGray uppercase tracking-wider">Total Sold</label>
+        <input
+          type="number"
+          name="totalsold"
+          id="totalsold"
+          required
+          placeholder="Total Sold"
+          class="w-full px-4 py-3 bg-darkBg border border-primary rounded-lg text-white placeholder-placeholderGray
+                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-70
+                 shadow-input-glow transition
+                 focus:shadow-input-glow-strong"
+        />
+      </div>
+
+      <div>
+        <label for="totalprofit" class="block mb-2 font-semibold text-labelGray uppercase tracking-wider">Total Profit</label>
+        <input
+          type="number"
+          name="totalprofit"
+          id="totalprofit"
+          required
+          placeholder="Total Profit"
+          class="w-full px-4 py-3 bg-darkBg border border-primary rounded-lg text-white placeholder-placeholderGray
+                 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-70
+                 shadow-input-glow transition
+                 focus:shadow-input-glow-strong"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full mt-4 bg-primary hover:bg-primaryHover text-darkBg font-bold py-3 rounded-lg
+               shadow-button-glow hover:shadow-button-glow-strong
+               transition-colors duration-300"
+      >
+        GENERATE
+      </button>
+    </form>
+    <a href="/"
+      class="inline-block mt-6 text-primary font-semibold underline
+          hover:text-primaryHover transition-colors duration-200
+          shadow-input-glow hover:shadow-input-glow-strong
+          focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 rounded px-2 py-1">
+       Back
+    </a>
+
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const bar = document.getElementById('loadingBar');
+      const fill = document.getElementById('barFill');
+
+      bar.classList.remove('hidden');
+      fill.style.width = '0%';
+
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          event.target.submit();
+        } else {
+          width += 1;
+          fill.style.width = width + '%';
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>

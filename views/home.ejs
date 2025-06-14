@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#10b981', // Tailwind's emerald-500
+          }
+        }
+      },
+      darkMode: 'class',
+    };
+  </script>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center px-6">
+  <div class="max-w-xl w-full text-center space-y-6">
+    <h1 class="text-4xl font-bold text-primary">Web3 Image Generator</h1>
+    <p class="text-lg text-gray-300">Create wonderful templates to show off your wins</p>
+
+    <form action="/" method="get" class="space-y-4">
+      <label for="routeSelect" class="block text-sm font-medium text-gray-200 mb-1">
+        Choose a platform:
+      </label>
+      <select
+        id="routeSelect"
+        name="routeSelect"
+        class="w-full p-3 bg-gray-800 border border-gray-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        <option value="/bullx">BullX</option>
+        <option value="/fpmp">FPMP</option>
+        <option value="/phanes">Phanes</option>
+        <option value="/blueray">BluRay</option>
+        <option value="/axiom">AXIOMpro</option>
+        
+      </select>
+
+      <button
+        type="submit"
+        class="mt-4 bg-primary hover:bg-emerald-600 text-white font-semibold py-2 px-6 rounded transition duration-300"
+      >
+        Continue
+      </button>
+    </form>
+  </div>
+</body>
+</html>

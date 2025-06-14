@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FPMP</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Config with Glowing Purple -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkBg: '#0f172a',
+            formBg: '#1e293b',
+            lightPurple: '#c084fc'
+          },
+          boxShadow: {
+            'glow-purple': '0 0 8px 2px rgba(192, 132, 252, 0.7)',
+            'glow-purple-strong': '0 0 12px 4px rgba(192, 132, 252, 0.9)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-darkBg text-white min-h-screen flex items-center justify-center px-4 py-6">
+
+  <div class="w-full max-w-lg bg-formBg p-8 rounded-lg shadow-lg space-y-6
+              shadow-glow-purple/40 hover:shadow-glow-purple-strong transition-shadow duration-500">
+    <h1 class="text-3xl font-bold text-center text-lightPurple">FPMP</h1>
+
+    <!--  Loading Bar -->
+    <div id="loadingBar" class="w-full h-2 bg-darkBg rounded overflow-hidden hidden shadow-inner mb-6">
+      <div id="barFill" class="h-full bg-lightPurple transition-all duration-100 ease-linear rounded shadow-glow-purple" style="width: 0%;"></div>
+    </div>
+
+    <form action="/fpmp" method="post" class="space-y-5" onsubmit="handleFormSubmit(event)">
+
+      <!-- Investment in SOL -->
+      <div>
+        <label for="investment" class="block mb-1 text-sm font-semibold text-lightPurple">Investment in SOL</label>
+        <input type="number" name="investment" id="investment" required placeholder="In SOL"
+               class="w-full p-3 rounded bg-darkBg text-white border border-lightPurple
+                      placeholder:text-gray-400
+                      focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-80
+                      shadow-glow-purple transition-shadow duration-300
+                      focus:shadow-glow-purple-strong" />
+      </div>
+
+      <!-- Current Profit in SOL -->
+      <div>
+        <label for="currentProfit" class="block mb-1 text-sm font-semibold text-lightPurple">Current Profit in SOL</label>
+        <input type="number" name="currentProfit" id="currentProfit" required placeholder="In SOL"
+               class="w-full p-3 rounded bg-darkBg text-white border border-lightPurple
+                      placeholder:text-gray-400
+                      focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-80
+                      shadow-glow-purple transition-shadow duration-300
+                      focus:shadow-glow-purple-strong" />
+      </div>
+
+      <!-- Investment in USD -->
+      <div>
+        <label for="investmentInUsd" class="block mb-1 text-sm font-semibold text-lightPurple">Investment in USD</label>
+        <input type="number" name="investmentInUsd" id="investmentInUsd" required placeholder="In USD"
+               class="w-full p-3 rounded bg-darkBg text-white border border-lightPurple
+                      placeholder:text-gray-400
+                      focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-80
+                      shadow-glow-purple transition-shadow duration-300
+                      focus:shadow-glow-purple-strong" />
+      </div>
+
+      <!-- Current Profit in USD -->
+      <div>
+        <label for="currentProfitInUsd" class="block mb-1 text-sm font-semibold text-lightPurple">Current Profit in USD</label>
+        <input type="number" name="currentProfitInUsd" id="currentProfitInUsd" required placeholder="In USD"
+               class="w-full p-3 rounded bg-darkBg text-white border border-lightPurple
+                      placeholder:text-gray-400
+                      focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-80
+                      shadow-glow-purple transition-shadow duration-300
+                      focus:shadow-glow-purple-strong" />
+      </div>
+
+      <!-- PNL -->
+      <div>
+        <label for="pnl" class="block mb-1 text-sm font-semibold text-lightPurple">PNL (%)</label>
+        <input type="number" name="pnl" id="pnl" required placeholder="In %"
+               class="w-full p-3 rounded bg-darkBg text-white border border-lightPurple
+                      placeholder:text-gray-400
+                      focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-80
+                      shadow-glow-purple transition-shadow duration-300
+                      focus:shadow-glow-purple-strong" />
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+                class="w-full bg-lightPurple text-darkBg font-bold py-3 px-4 rounded
+                       hover:bg-purple-500 transition-colors duration-200
+                       shadow-glow-purple
+                       hover:shadow-glow-purple-strong
+                       focus:outline-none focus:ring-4 focus:ring-lightPurple focus:ring-opacity-75">
+          GENERATE
+        </button>
+      </div>
+    </form>
+    <a href="/"
+      class="inline-block mt-6 text-lightPurple font-semibold underline
+          hover:text-purple-400 transition-colors duration-200
+          shadow-glow-purple hover:shadow-glow-purple-strong
+          focus:outline-none focus:ring-2 focus:ring-lightPurple focus:ring-opacity-50 rounded px-2 py-1">
+      Back
+     </a>
+
+  </div>
+
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const bar = document.getElementById('loadingBar');
+      const fill = document.getElementById('barFill');
+
+      bar.classList.remove('hidden');
+      fill.style.width = '0%';
+
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          event.target.submit();
+        } else {
+          width += 1;
+          fill.style.width = width + '%';
+        }
+      }, 100);
+    }
+  </script>
+</body>
+</html>

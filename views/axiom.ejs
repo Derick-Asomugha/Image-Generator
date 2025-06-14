@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIOMpro</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkBg: '#0f172a',         // Slate-900
+            inputBg: '#1e293b',        // Slate-800
+            accentBlue: '#60a5fa'      // Blue-400
+          },
+          boxShadow: {
+            'glow-blue': '0 0 8px 2px rgba(96, 165, 250, 0.7)',  // glow shadow for blue
+            'glow-blue-strong': '0 0 12px 4px rgba(96, 165, 250, 0.9)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body class="bg-darkBg text-white min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-xl bg-inputBg p-8 rounded-lg shadow-lg space-y-6
+              shadow-glow-blue/40 hover:shadow-glow-blue-strong transition-shadow duration-500">
+    <h1 class="text-3xl font-bold text-accentBlue text-center">AXIOMpro</h1>
+
+    <!--  Loading Bar (Initially Hidden) -->
+    <div id="loadingBar" class="w-full h-2 bg-darkBg rounded overflow-hidden hidden shadow-inner">
+      <div id="barFill" class="h-full bg-accentBlue transition-all duration-100 ease-linear rounded
+                      shadow-glow-blue" style="width: 0%;"></div>
+    </div>
+
+    <form action="/axiom" method="post" class="space-y-5" onsubmit="handleFormSubmit(event)">
+      <!-- PNL in SOL -->
+      <div>
+        <label for="pnlInSol" class="block mb-1 font-semibold text-gray-300">PNL in SOL</label>
+        <input type="number" name="pnlInSol" id="pnlInSol" required autofocus placeholder="In Sol"
+               class="w-full p-3 rounded bg-darkBg text-white border border-accentBlue
+                      focus:outline-none focus:ring-2 focus:ring-accentBlue focus:ring-opacity-80
+                      placeholder:text-gray-400
+                      shadow-glow-blue transition-shadow duration-300
+                      focus:shadow-glow-blue-strong" />
+      </div>
+
+      <!-- PNL in % -->
+      <div>
+        <label for="pnl" class="block mb-1 font-semibold text-gray-300">PNL (%)</label>
+        <input type="number" name="pnl" id="pnl" required placeholder="In %"
+               class="w-full p-3 rounded bg-darkBg text-white border border-accentBlue
+                      focus:outline-none focus:ring-2 focus:ring-accentBlue focus:ring-opacity-80
+                      placeholder:text-gray-400
+                      shadow-glow-blue transition-shadow duration-300
+                      focus:shadow-glow-blue-strong" />
+      </div>
+
+      <!-- Buying Price -->
+      <div>
+        <label for="buyingPrice" class="block mb-1 font-semibold text-gray-300">Buying Price</label>
+        <input type="number" name="buyingPrice" id="buyingPrice" required placeholder="In SOL"
+               class="w-full p-3 rounded bg-darkBg text-white border border-accentBlue
+                      focus:outline-none focus:ring-2 focus:ring-accentBlue focus:ring-opacity-80
+                      placeholder:text-gray-400
+                      shadow-glow-blue transition-shadow duration-300
+                      focus:shadow-glow-blue-strong" />
+      </div>
+
+      <!-- Current Price -->
+      <div>
+        <label for="currentPrice" class="block mb-1 font-semibold text-gray-300">Current Price</label>
+        <input type="number" name="currentPrice" id="currentPrice" required placeholder="In SOL"
+               class="w-full p-3 rounded bg-darkBg text-white border border-accentBlue
+                      focus:outline-none focus:ring-2 focus:ring-accentBlue focus:ring-opacity-80
+                      placeholder:text-gray-400
+                      shadow-glow-blue transition-shadow duration-300
+                      focus:shadow-glow-blue-strong" />
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+                class="w-full bg-accentBlue text-darkBg font-bold py-3 px-4 rounded
+                       hover:bg-blue-400 transition-colors duration-200
+                       shadow-glow-blue
+                       hover:shadow-glow-blue-strong
+                       focus:outline-none focus:ring-4 focus:ring-accentBlue focus:ring-opacity-75">
+          GENERATE
+        </button>
+      </div>
+    </form>
+     <a href="/" class="inline-block mt-4 text-accentBlue font-semibold underline hover:text-blue-300 transition-colors duration-200">
+       Back
+      </a>
+  </div>
+
+  <!-- 🔧 JavaScript: Delayed Submit with Loading Bar -->
+  <script>
+    function handleFormSubmit(event) {
+      event.preventDefault(); // Stop immediate submission
+
+      const bar = document.getElementById('loadingBar');
+      const fill = document.getElementById('barFill');
+      bar.classList.remove('hidden'); // Show bar
+      fill.style.width = '0%';
+
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          event.target.submit(); // Now submit form
+        } else {
+          width += 1; // 1% every 100ms = ~10 seconds total
+          fill.style.width = width + '%';
+        }
+      }, 100); // Update every 100ms
+    }
+  </script>
+</body>
+</html>

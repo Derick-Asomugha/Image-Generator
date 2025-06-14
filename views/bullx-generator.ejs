@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BULLX-Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-800 min-h-screen flex flex-col items-center justify-center px-4 py-10 space-y-6">
+
+  <!-- Content to capture -->
+  <div id="fpmp" class="relative w-full max-w-4xl font-sans">
+    <img src="/images/bullx.jpg" alt="Background Image" class="w-full h-auto rounded-lg shadow-xl" />
+
+    <div class="absolute inset-0 flex flex-col items-start justify-center text-white text-left space-y-10 px-6 sm:px-10 py-6">
+      <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-green-400 drop-shadow-[0_0_8px_#22c55e] tracking-wide">
+        +<%= pnl %> SOL
+      </h1>
+
+      <div class="flex flex-row w-full max-w-xl gap-12">
+        <div id="1" class="w-1/2 space-y-4">
+          <p class="text-lg sm:text-xl font-semibold">Total Invested</p>
+          <p class="text-lg sm:text-xl font-semibold">Total Sold</p>
+          <p class="text-lg sm:text-xl font-semibold">Total Profit</p>
+        </div>
+        <div id="2" class="w-1/2 space-y-4">
+          <p class="text-lg sm:text-xl font-medium"><%= totalinvested %>$</p>
+          <p class="text-lg sm:text-xl font-medium"><%= totalsold %>$</p>
+          <p class="text-lg sm:text-xl font-bold text-green-400"><%= totalprofit %>$</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    <button id="downloadBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition duration-300">
+      Download Image
+    </button>
+
+    <a href="/" class="text-white border border-white px-5 py-2 rounded-lg hover:bg-white hover:text-black transition duration-300 font-medium">
+      Done
+    </a>
+  </div>
+
+  <!-- Script -->
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const capture = document.getElementById("fpmp");
+      html2canvas(capture).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "bullx-snapshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

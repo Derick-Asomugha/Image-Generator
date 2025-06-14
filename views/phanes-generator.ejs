@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHANES-Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- html2canvas CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-gradient-to-b from-black via-zinc-900 to-zinc-800 min-h-screen flex flex-col items-center justify-center gap-4 py-8">
+
+ 
+  <!-- Content to Capture -->
+  <div class="relative w-full max-w-4xl font-sans" id="phanes">
+    <!-- Background image -->
+    <img src="/images/phanes.jpg" alt="Background Image" class="w-full h-auto rounded-lg shadow-xl" />
+
+    <!-- Overlay content -->
+    <div class="absolute inset-0 flex items-center justify-end px-4 sm:px-8 md:px-12 lg:px-16">
+      <div class="text-right space-y-3 sm:space-y-4 md:space-y-5 w-full max-w-md">
+
+        <!-- Token Name -->
+        <h2 class="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-wide">
+          $<%= tkName %>
+        </h2>
+
+        <!-- Market Value -->
+        <p class="text-white text-base sm:text-lg md:text-xl font-medium tracking-wider">
+          called at <%= marketValue %>M
+        </p>
+
+        <!-- PNL -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-green-400 drop-shadow-[0_0_6px_#22c55e] outline outline-2 outline-green-700 rounded px-4 py-1 inline-block">
+          <%= pnl %>×
+        </h1>
+
+        <!-- Name with Icon -->
+        <p class="text-white text-base sm:text-lg md:text-xl flex items-center justify-end gap-2">
+          <span class="text-xl text-white">👤</span>
+          <span><%= name %></span>
+        </p>
+
+        <!-- Duration with Icon -->
+        <p class="text-white text-base sm:text-lg md:text-xl flex items-center justify-end gap-2">
+          <span class="text-xl text-white">🕒</span>
+          <span><%= duration %></span>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+<div class="flex gap-4 mt-4">
+  <button id="downloadBtn" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow">
+    Download Image
+  </button>
+  <a href="/" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-4 rounded shadow">
+    Done
+  </a>
+</div>
+
+
+  
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const capture = document.getElementById("phanes");
+      html2canvas(capture).then((canvas) => {
+        const link = document.createElement("a");
+        link.download = "phanes-snapshot.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+  </script>
+
+</body>
+</html>

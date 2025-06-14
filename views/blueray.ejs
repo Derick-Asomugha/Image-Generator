@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUE RAY</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind Custom Dark + Lemon Glow Theme -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkestGreen: '#0b1e17',       // Deeper dark base
+            inputDeep: '#122820',          // Slightly lighter input background
+            lemonGreen: '#a3e635'          // Vivid lemon-lime green
+          },
+          boxShadow: {
+            'glow-lemon': '0 0 10px 3px rgba(163, 230, 53, 0.7)',
+            'glow-lemon-strong': '0 0 16px 5px rgba(163, 230, 53, 0.9)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-darkestGreen text-white min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-xl bg-inputDeep p-8 rounded-lg shadow-lg space-y-6
+              shadow-glow-lemon/40 hover:shadow-glow-lemon-strong transition-shadow duration-500">
+    
+    <h1 class="text-3xl font-bold text-lemonGreen text-center">BLUE RAY</h1>
+
+    <!--  Lemon Green Loading Bar -->
+    <div id="loadingBar" class="w-full h-2 bg-darkestGreen rounded overflow-hidden hidden shadow-inner">
+      <div id="barFill" class="h-full bg-lemonGreen transition-all duration-100 ease-linear rounded shadow-glow-lemon" style="width: 0%;"></div>
+    </div>
+
+    <!--  GET Form -->
+    <form action="/blueray" method="post" id="blueRayForm" class="space-y-5">
+      <!-- PNL -->
+      <div>
+        <label for="pnl" class="block mb-1 font-medium text-lemonGreen">PNL</label>
+        <input type="number" name="pnl" id="pnl" required autofocus
+               class="w-full p-3 rounded bg-darkestGreen text-white border border-lemonGreen shadow-glow-lemon
+                      focus:outline-none focus:ring-2 focus:ring-lemonGreen focus:shadow-glow-lemon-strong placeholder:text-gray-400" />
+      </div>
+
+      <!-- Entry Price -->
+      <div>
+        <label for="entryprice" class="block mb-1 font-medium text-lemonGreen">Entry Price</label>
+        <input type="number" name="entryprice" id="entryprice" required
+               class="w-full p-3 rounded bg-darkestGreen text-white border border-lemonGreen shadow-glow-lemon
+                      focus:outline-none focus:ring-2 focus:ring-lemonGreen focus:shadow-glow-lemon-strong placeholder:text-gray-400" />
+      </div>
+
+      <!-- Current Price -->
+      <div>
+        <label for="currentPrice" class="block mb-1 font-medium text-lemonGreen">Current Price</label>
+        <input type="number" name="currentPrice" id="currentPrice" required
+               class="w-full p-3 rounded bg-darkestGreen text-white border border-lemonGreen shadow-glow-lemon
+                      focus:outline-none focus:ring-2 focus:ring-lemonGreen focus:shadow-glow-lemon-strong placeholder:text-gray-400" />
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+                class="w-full bg-lemonGreen text-darkestGreen font-bold py-3 px-4 rounded
+                       hover:bg-lime-400 transition-colors duration-200
+                       shadow-glow-lemon hover:shadow-glow-lemon-strong
+                       focus:outline-none focus:ring-4 focus:ring-lemonGreen focus:ring-opacity-75">
+          GENERATE
+        </button>
+      </div>
+    </form>
+    <a href="/" 
+     class="inline-block mt-6 text-lemonGreen font-semibold underline
+          hover:text-lime-400 transition-colors duration-200
+          shadow-glow-lemon hover:shadow-glow-lemon-strong
+          focus:outline-none focus:ring-2 focus:ring-lemonGreen focus:ring-opacity-50 rounded px-2 py-1">
+       Back
+     </a>
+
+  </div>
+
+  <!--  JS: Handle loading and redirect -->
+  <script>
+    document.getElementById('blueRayForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const bar = document.getElementById('loadingBar');
+      const fill = document.getElementById('barFill');
+      bar.classList.remove('hidden');
+      fill.style.width = '0%';
+
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+
+          const form = event.target;
+          const formData = new FormData(form);
+          const queryString = new URLSearchParams(formData).toString();
+
+          event.target.submit();
+        } else {
+          width += 1;
+          fill.style.width = width + '%';
+        }
+      }, 100); // 100ms per step → 10s total
+    });
+  </script>
+</body>
+</html>
